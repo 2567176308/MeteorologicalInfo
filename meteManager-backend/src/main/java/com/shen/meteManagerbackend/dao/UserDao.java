@@ -14,7 +14,7 @@ public interface UserDao {
 //    根据邮箱查询账户数量(结果一般为0，用于检测是否重复注册)
     Integer countByMail(String userMail);
 
-    User getUserByEmail(String userMail);
+    Optional<User> getUserByEmail(String userMail);
 
 
 

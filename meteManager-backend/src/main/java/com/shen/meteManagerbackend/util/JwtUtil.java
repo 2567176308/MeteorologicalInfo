@@ -21,12 +21,9 @@ public class JwtUtil {
     /**
      * 生成Jwt工具类
      */
-    @Value("${application.security.jwt.secret-key}")
-    private static String secretKey;
-    @Value("${application.security.jwt.expiration}")
-    private static long jwtExpiration;
-    @Value("${application.security.jwt.refresh-token.expiration}")
-    private static long refreshExpiration;
+    private static final String secretKey = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+    private static final long jwtExpiration = 86400000;
+    private static final long refreshExpiration = 604800000;
 
     public static String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -37,7 +34,7 @@ public class JwtUtil {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public static String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
@@ -83,7 +80,7 @@ public class JwtUtil {
     }
 
     private static Claims extractAllClaims(String token) {
-        Claims claims = null;
+        Claims claims;
         try{
             claims =  Jwts
                     .parserBuilder()

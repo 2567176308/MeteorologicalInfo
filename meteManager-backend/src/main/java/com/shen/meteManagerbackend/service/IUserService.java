@@ -1,25 +1,27 @@
 package com.shen.meteManagerbackend.service;
 
-import com.shen.meteManagerbackend.dto.LoginDTO;
-import com.shen.meteManagerbackend.dto.RegisterDTO;
-import com.shen.meteManagerbackend.entity.User;
+import com.shen.meteManagerbackend.dto.ReqLoginDTO;
+import com.shen.meteManagerbackend.dto.ReqRegisterDTO;
+import com.shen.meteManagerbackend.dto.ResLoginDTO;
+import com.shen.meteManagerbackend.dto.ResRegisterDTO;
 import com.shen.meteManagerbackend.exception.AccountHasLockedException;
 import com.shen.meteManagerbackend.exception.DuplicateRegistrationException;
 import com.shen.meteManagerbackend.exception.EmailNotfoundException;
 import com.shen.meteManagerbackend.exception.PasswordOrEmailErrorException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface IUserService {
 
     /**
      * 用户注册
-     * @param registerDTO user实例
+     * @param reqRegisterDTO user实例
      */
-    void userRegister(RegisterDTO registerDTO) throws DuplicateRegistrationException;
+    ResRegisterDTO userRegister(ReqRegisterDTO reqRegisterDTO) throws DuplicateRegistrationException;
 
     /**
      * 用户登录
-     * @param loginDTO user实例
+     * @param reqLoginDTO user实例
      */
-    void userLogin(LoginDTO loginDTO) throws PasswordOrEmailErrorException, EmailNotfoundException, AccountHasLockedException;
+    ResLoginDTO userLogin(ReqLoginDTO reqLoginDTO) throws PasswordOrEmailErrorException, EmailNotfoundException, AccountHasLockedException;
 
 }

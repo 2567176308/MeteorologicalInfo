@@ -2,8 +2,10 @@ package com.shen.meteManagerbackend.controller;
 
 import com.shen.meteManagerbackend.common.CodeMsg;
 import com.shen.meteManagerbackend.common.Result;
-import com.shen.meteManagerbackend.dto.LoginDTO;
-import com.shen.meteManagerbackend.dto.RegisterDTO;
+import com.shen.meteManagerbackend.dto.ReqLoginDTO;
+import com.shen.meteManagerbackend.dto.ReqRegisterDTO;
+import com.shen.meteManagerbackend.dto.ResLoginDTO;
+import com.shen.meteManagerbackend.dto.ResRegisterDTO;
 import com.shen.meteManagerbackend.exception.AccountHasLockedException;
 import com.shen.meteManagerbackend.exception.DuplicateRegistrationException;
 import com.shen.meteManagerbackend.exception.EmailNotfoundException;
@@ -23,15 +25,15 @@ public class UserController {
 
     /**
      * 注册用户
-     * @param registerDTO userDetails from frontend
+     * @param reqRegisterDTO userDetails from frontend
      * @return Result<String>
      */
     @PostMapping("/api/register")
-    public Result<String> register(
-            @RequestBody RegisterDTO registerDTO) {
+    public Result<?> register(
+            @RequestBody ReqRegisterDTO reqRegisterDTO) {
         try {
-            userService.userRegister(registerDTO);
-            return Result.success("registration success");
+            ResRegisterDTO resRegisterDTO = userService.userRegister(reqRegisterDTO);
+            return Result.success(resRegisterDTO);
         } catch (DuplicateRegistrationException e) {
             return Result.error(CodeMsg.EMPTY_PARAM_ERROR,"your email may has been registered");
         }
@@ -40,14 +42,14 @@ public class UserController {
 
     /**
      * 用户登录
-     * @param loginDTO 前端传入数据信息（email + password）
+     * @param reqLoginDTO 前端传入数据信息（email + password）
      * @return ? TODO 具体前端需要数据
      */
     @PostMapping("/api/login")
-    public Result<?> login(@RequestBody LoginDTO loginDTO) {
+    public Result<?> login(@RequestBody ReqLoginDTO reqLoginDTO) {
         try {
-            userService.userLogin(loginDTO);
-            return Result.success();
+            ResLoginDTO resLoginDTO = userService.userLogin(reqLoginDTO);
+            return Result.success(resLoginDTO);
         } catch (PasswordOrEmailErrorException | EmailNotfoundException | AccountHasLockedException e) {
             return Result.error(CodeMsg.EMPTY_PARAM_ERROR,e.getMessage());
         }
