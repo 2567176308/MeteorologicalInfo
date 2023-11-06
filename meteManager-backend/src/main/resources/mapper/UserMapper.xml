@@ -25,11 +25,12 @@
         );
     </insert>
 
-    <select id="selectAllBank" resultType="User">
-        select * from tb_bank
-    </select>
+
     <select id="countByMail" resultType="java.lang.Integer" parameterType="java.lang.String">
-        SELECT COUNT(*) FROM tb_user WHERE user_mail = #{userMail};
+        SELECT COUNT(*) FROM tb_user WHERE user_mail = #{userMail} AND delete_time=null;
+    </select>
+    <select id="getUserByEmail" resultType="com.shen.meteManagerbackend.entity.User">
+        SELECT * FROM tb_user WHERE user_mail = #{userMail} AND delete_time IS NULL;
     </select>
 
 </mapper>
