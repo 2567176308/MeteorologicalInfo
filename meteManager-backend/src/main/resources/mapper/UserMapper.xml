@@ -41,6 +41,27 @@
     </update>
 
 
+    <update id="deleteUser" parameterType="User">
+        UPDATE tb_user
+        SET delete_time = #{deleteTime}
+        WHERE
+        <choose>
+            <when test="userId!=null">user_id = #{userId}</when>
+            <when test="userMail!=null">user_mail = #{userMail}</when>
+        </choose>
+    </update>
+    <update id="lockOrUnlockUser">
+        UPDATE tb_user
+        SET is_lock = #{isLock}
+        <where>
+            <choose>
+                <when test="userId!=null">user_id = #{userId}</when>
+                <when test="userMail!=null">user_mail = #{userMail}</when>
+            </choose>
+        </where>
+
+    </update>
+
 
     <select id="countByMail" resultType="java.lang.Integer" parameterType="java.lang.String">
         SELECT COUNT(*) FROM tb_user WHERE user_mail = #{userMail} AND delete_time IS null;

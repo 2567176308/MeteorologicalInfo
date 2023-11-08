@@ -3,7 +3,6 @@ package com.shen.meteManagerbackend.controller;
 import com.shen.meteManagerbackend.common.CodeMsg;
 import com.shen.meteManagerbackend.common.Result;
 import com.shen.meteManagerbackend.dto.*;
-import com.shen.meteManagerbackend.exception.*;
 import com.shen.meteManagerbackend.service.IUserService;
 import com.shen.meteManagerbackend.util.UserInfoUtil;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +51,68 @@ public class UserController {
             return Result.error(CodeMsg.EMPTY_PARAM_ERROR);
         }
         userService.changePwd(changePwdDTO);
+        return Result.success();
+    }
+    /*----------------------------------power by admin---------------------------------------------*/
+
+    /**
+     * 逻辑删除用户(管理员)
+     * @param userId 用户id
+     * @return result
+     */
+    @DeleteMapping("/admin/deleteUserById/{userId}")
+    public Result<?> deleteUser(@PathVariable Integer userId) {
+        userService.deleteUserByAdmin(userId);
+        return Result.success();
+    }
+    /**
+     * 逻辑删除用户(管理员)
+     * @param userMail 用户mail
+     * @return result
+     */
+    @DeleteMapping("/admin/deleteUserByMail/{userMail}")
+    public Result<?> deleteUser(@PathVariable String userMail) {
+        userService.deleteUserByAdmin(userMail);
+        return Result.success();
+    }
+    /**
+     * 冻结用户(管理员)
+     * @param userId 用户id
+     * @return result
+     */
+    @PutMapping("/admin/lockUserById/{userId}")
+    public Result<?> lockUser(@PathVariable Integer userId) {
+        userService.lockUser(userId);
+        return Result.success();
+    }
+    /**
+     * 冻结用户(管理员)
+     * @param userMail 用户Mail
+     * @return result
+     */
+    @PutMapping("/admin/lockUserByMail/{userMail}")
+    public Result<?> lockUser(@PathVariable String userMail) {
+        userService.lockUser(userMail);
+        return Result.success();
+    }
+    /**
+     * 解冻用户(管理员)
+     * @param userMail 用户Mail
+     * @return result
+     */
+    @PutMapping("/admin/unlockUserByMail/{userMail}")
+    public Result<?> unlockUser(@PathVariable String userMail) {
+        userService.unlockUser(userMail);
+        return Result.success();
+    }
+    /**
+     * 解冻用户(管理员)
+     * @param userId 用户Mail
+     * @return result
+     */
+    @PutMapping("/admin/unlockUserById/{userId}")
+    public Result<?> unlockUser(@PathVariable Integer userId) {
+        userService.unlockUser(userId);
         return Result.success();
     }
 }

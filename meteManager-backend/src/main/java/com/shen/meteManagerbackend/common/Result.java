@@ -49,7 +49,7 @@ public class Result <T> implements Serializable {
 //    成功不许要传入参数类型
     @SuppressWarnings("unchecked")
     public static <T> Result<T> success() {
-        return (Result<T>) success("");
+        return (Result<T>) success("success");
     }
 
     /**

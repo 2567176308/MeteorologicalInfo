@@ -11,10 +11,7 @@ import com.shen.meteManagerbackend.service.IUserService;
 import com.shen.meteManagerbackend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +23,6 @@ import java.util.Date;
 public class UserService implements IUserService {
 
     private final UserDao userDao;
-    private final AuthenticationManager manager;
     private final PasswordEncoder passwordEncoder;
     private final IAuthService authService;
     @Override
@@ -117,5 +113,76 @@ public class UserService implements IUserService {
         userDao.updateUserInfo(user);
     }
 
+
+    /*-------------------------admin-----------------------------*/
+    @Override
+    public void deleteUserByAdmin(Integer userId) {
+        User user = User.builder()
+                .deleteTime(new Date()) //逻辑删除时间
+                .userId(userId)
+                .build();
+        deleteUser(user);
+    }
+
+    @Override
+    public void deleteUserByAdmin(String userMail) {
+        User user = User.builder()
+                .deleteTime(new Date()) //逻辑删除时间
+                .userMail(userMail)
+                .build();
+        deleteUser(user);
+    }
+
+    @Override
+    public void lockUser(Integer userId) {
+        User user = User.builder()
+                .userId(userId)
+                .isLock(true)
+                .build();
+        lockOrUnlockUser(user);
+    }
+
+    @Override
+    public void lockUser(String userMail) {
+        User user = User.builder()
+                .userMail(userMail)
+                .isLock(true)
+                .build();
+        lockOrUnlockUser(user);
+    }
+
+    @Override
+    public void unlockUser(String userMail) {
+        User user = User.builder()
+                .userMail(userMail)
+                .isLock(false)
+                .build();
+        lockOrUnlockUser(user);
+    }
+
+    @Override
+    public void unlockUser(Integer userId) {
+        User user = User.builder()
+                .userId(userId)
+                .isLock(false)
+                .build();
+        lockOrUnlockUser(user);
+    }
+
+    /**
+     * 删除用户真实方法
+     * @param user user实例
+     */
+    private void deleteUser(User user) {
+        userDao.deleteUser(user);
+    }
+
+    /**
+     * 冻结&解冻用户真实方法
+     * @param user user实例
+     */
+    private void lockOrUnlockUser(User user) {
+        userDao.lockOrUnlockUser(user);
+    }
 
 }

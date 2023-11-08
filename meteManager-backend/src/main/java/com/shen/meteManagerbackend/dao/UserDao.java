@@ -20,4 +20,18 @@ public interface UserDao {
 
 
 
+//    ===========================================================
+    /**
+     * 管理员操作、删除用户(逻辑删除,支持根据id和根据邮箱)
+     * @param user 用户ID 以及deleteTime
+     */
+    void deleteUser(User user);
+
+
+    /**
+     * 管理员操作、冻结&&解冻用户
+     * @param user 用户(支持根据id和根据邮箱)
+     */
+    void lockOrUnlockUser(User user);
+
 }

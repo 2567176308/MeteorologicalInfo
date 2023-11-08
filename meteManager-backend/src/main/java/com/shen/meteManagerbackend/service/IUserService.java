@@ -26,4 +26,14 @@ public interface IUserService {
      * @param changePwdDTO changePwdDTO
      */
     void changePwd(ChangePwdDTO changePwdDTO);
+
+    /*----------------------------power by admin----------------------------*/
+    void deleteUserByAdmin(Integer userId);
+    void deleteUserByAdmin(String userMail);
+
+    void lockUser(Integer userId);
+    void lockUser(String userMail);
+
+    void unlockUser(String userMail);
+    void unlockUser(Integer userId);
 }
