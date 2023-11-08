@@ -24,6 +24,22 @@
         <if test="deleteTime!=null">,#{deleteTime}</if>
         );
     </insert>
+    <update id="updateUserInfo" parameterType="User">
+        UPDATE tb_user
+        SET
+        <trim suffixOverrides=",">
+            <!-- The TRIM element above is used to remove the trailing comma -->
+        <if test="userName!=null">user_name = #{userName},</if>
+        <if test="passWord!=null">pass_word = #{passWord},</if>
+        <if test="role!=null">role = #{role},</if>
+        <if test="isLock!=null">is_lock = #{isLock},</if>
+        <if test="createTime!=null">create_time = #{createTime},</if>
+        <if test="updateTime!=null">update_time = #{updateTime},</if>
+        <if test="deleteTime!=null">delete_time = #{deleteTime}</if>
+        </trim>
+        WHERE user_mail = #{userMail}
+    </update>
+
 
 
     <select id="countByMail" resultType="java.lang.Integer" parameterType="java.lang.String">

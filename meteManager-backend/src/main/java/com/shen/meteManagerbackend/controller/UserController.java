@@ -2,20 +2,12 @@ package com.shen.meteManagerbackend.controller;
 
 import com.shen.meteManagerbackend.common.CodeMsg;
 import com.shen.meteManagerbackend.common.Result;
-import com.shen.meteManagerbackend.dto.ReqLoginDTO;
-import com.shen.meteManagerbackend.dto.ReqRegisterDTO;
-import com.shen.meteManagerbackend.dto.ResLoginDTO;
-import com.shen.meteManagerbackend.dto.ResRegisterDTO;
-import com.shen.meteManagerbackend.exception.AccountHasLockedException;
-import com.shen.meteManagerbackend.exception.DuplicateRegistrationException;
-import com.shen.meteManagerbackend.exception.EmailNotfoundException;
-import com.shen.meteManagerbackend.exception.PasswordOrEmailErrorException;
+import com.shen.meteManagerbackend.dto.*;
+import com.shen.meteManagerbackend.exception.*;
 import com.shen.meteManagerbackend.service.IUserService;
+import com.shen.meteManagerbackend.util.UserInfoUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("user")
@@ -31,27 +23,35 @@ public class UserController {
     @PostMapping("/api/register")
     public Result<?> register(
             @RequestBody ReqRegisterDTO reqRegisterDTO) {
-        try {
             ResRegisterDTO resRegisterDTO = userService.userRegister(reqRegisterDTO);
             return Result.success(resRegisterDTO);
-        } catch (DuplicateRegistrationException e) {
-            return Result.error(CodeMsg.EMPTY_PARAM_ERROR,"your email may has been registered");
-        }
     }
 
 
     /**
      * 用户登录
      * @param reqLoginDTO 前端传入数据信息（email + password）
-     * @return ? TODO 具体前端需要数据
+     * @return Result<ResLoginDTO>
      */
     @PostMapping("/api/login")
     public Result<?> login(@RequestBody ReqLoginDTO reqLoginDTO) {
-        try {
-            ResLoginDTO resLoginDTO = userService.userLogin(reqLoginDTO);
-            return Result.success(resLoginDTO);
-        } catch (PasswordOrEmailErrorException | EmailNotfoundException | AccountHasLockedException e) {
-            return Result.error(CodeMsg.EMPTY_PARAM_ERROR,e.getMessage());
+        ResLoginDTO resLoginDTO = userService.userLogin(reqLoginDTO);
+        return Result.success(resLoginDTO);
+    }
+
+    /**
+     * 用户修改密码、作用于仅仅在于该用户线程不允许跨用户操作
+     * 仅仅允许修改自身密码
+     * @param changePwdDTO from front end
+     * @return success or fail
+     */
+    @PutMapping("/user/changePwd")
+    public Result<?> changePassWord(@RequestBody ChangePwdDTO changePwdDTO){
+
+        if (!UserInfoUtil.isCorrectMail(changePwdDTO.getUserMail())) {
+            return Result.error(CodeMsg.EMPTY_PARAM_ERROR);
         }
+        userService.changePwd(changePwdDTO);
+        return Result.success();
     }
 }

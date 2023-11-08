@@ -1,14 +1,10 @@
 package com.shen.meteManagerbackend.service;
 
-import com.shen.meteManagerbackend.dto.ReqLoginDTO;
-import com.shen.meteManagerbackend.dto.ReqRegisterDTO;
-import com.shen.meteManagerbackend.dto.ResLoginDTO;
-import com.shen.meteManagerbackend.dto.ResRegisterDTO;
+import com.shen.meteManagerbackend.dto.*;
 import com.shen.meteManagerbackend.exception.AccountHasLockedException;
 import com.shen.meteManagerbackend.exception.DuplicateRegistrationException;
 import com.shen.meteManagerbackend.exception.EmailNotfoundException;
 import com.shen.meteManagerbackend.exception.PasswordOrEmailErrorException;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface IUserService {
 
@@ -24,4 +20,10 @@ public interface IUserService {
      */
     ResLoginDTO userLogin(ReqLoginDTO reqLoginDTO) throws PasswordOrEmailErrorException, EmailNotfoundException, AccountHasLockedException;
 
+
+    /**
+     * 修改密码
+     * @param changePwdDTO changePwdDTO
+     */
+    void changePwd(ChangePwdDTO changePwdDTO);
 }

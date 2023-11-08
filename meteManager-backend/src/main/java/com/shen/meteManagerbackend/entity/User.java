@@ -21,7 +21,6 @@ import java.util.Date;
 public class User implements UserDetails {
 
     private Integer userId;
-    @Getter
     private String userName;
     private String passWord;
     private String userMail;

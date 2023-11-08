@@ -49,7 +49,7 @@ public class SecurityConfig {
                 .authenticated()
 //                仅管理员可访问接口
                 .antMatchers("/*/admin/**")
-                .hasAuthority("admin")
+                .hasAuthority("ADMIN")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

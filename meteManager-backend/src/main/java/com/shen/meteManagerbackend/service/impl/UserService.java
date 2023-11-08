@@ -1,16 +1,11 @@
 package com.shen.meteManagerbackend.service.impl;
 
 import com.shen.meteManagerbackend.dao.UserDao;
-import com.shen.meteManagerbackend.dto.ReqLoginDTO;
-import com.shen.meteManagerbackend.dto.ReqRegisterDTO;
-import com.shen.meteManagerbackend.dto.ResLoginDTO;
-import com.shen.meteManagerbackend.dto.ResRegisterDTO;
+import com.shen.meteManagerbackend.dto.*;
 import com.shen.meteManagerbackend.entity.User;
 import com.shen.meteManagerbackend.enumerate.IsLocked;
 import com.shen.meteManagerbackend.enumerate.Role;
-import com.shen.meteManagerbackend.exception.AccountHasLockedException;
-import com.shen.meteManagerbackend.exception.DuplicateRegistrationException;
-import com.shen.meteManagerbackend.exception.PasswordOrEmailErrorException;
+import com.shen.meteManagerbackend.exception.*;
 import com.shen.meteManagerbackend.service.IAuthService;
 import com.shen.meteManagerbackend.service.IUserService;
 import com.shen.meteManagerbackend.util.JwtUtil;
@@ -101,6 +96,26 @@ public class UserService implements IUserService {
                 .build();
     }
 
+    @Override
+    public void changePwd(ChangePwdDTO changePwdDTO) {
+//        判断密码正误
+        if (!changePwdDTO.getNewPassWord().equals(changePwdDTO.getRePassWord())) {
+            throw new PassWordInconsistentException("Two password are inconsistent");
+        }
+//        判断原密码是否正确
+        String ordPassWordFromDB = userDao.getUserByEmail(changePwdDTO.getUserMail())
+                .map(User::getPassword)
+                .orElseThrow(() -> new EmailNotfoundException("This email has not been registered yet"));
+        if (!passwordEncoder.matches(changePwdDTO.getOldPassWord(), ordPassWordFromDB)) {
+            throw new PasswordOrEmailErrorException("The email or password incorrect");
+        }
+//        修改密码到数据库
+        User user = User.builder()
+                .userMail(changePwdDTO.getUserMail())
+                .passWord(passwordEncoder.encode(changePwdDTO.getNewPassWord())) // 加密后存入DB
+                .build();
+        userDao.updateUserInfo(user);
+    }
 
 
 }

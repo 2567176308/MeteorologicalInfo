@@ -16,6 +16,8 @@ public interface UserDao {
 
     Optional<User> getUserByEmail(String userMail);
 
+    void updateUserInfo(User user);
+
 
 
 }
