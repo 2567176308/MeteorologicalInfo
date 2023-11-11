@@ -3,6 +3,7 @@ package com.shen.meteManagerbackend.controller;
 import com.shen.meteManagerbackend.common.CodeMsg;
 import com.shen.meteManagerbackend.common.Result;
 import com.shen.meteManagerbackend.dto.*;
+import com.shen.meteManagerbackend.entity.Address;
 import com.shen.meteManagerbackend.service.IUserService;
 import com.shen.meteManagerbackend.util.UserInfoUtil;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,16 @@ public class UserController {
             return Result.error(CodeMsg.EMPTY_PARAM_ERROR);
         }
         userService.changePwd(changePwdDTO);
+        return Result.success();
+    }
+    /**
+     * 用户添加当前地址或修改当前地址
+     * @param address 地址代码
+     * @return Result
+     */
+    @PostMapping("/user/addAddress")
+    public Result<?> addAddress(@RequestBody Address address) {
+        userService.addOrChangeAddress(address);
         return Result.success();
     }
     /*----------------------------------power by admin---------------------------------------------*/

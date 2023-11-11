@@ -2,6 +2,7 @@ package com.shen.meteManagerbackend.service.impl;
 
 import com.shen.meteManagerbackend.dao.UserDao;
 import com.shen.meteManagerbackend.dto.*;
+import com.shen.meteManagerbackend.entity.Address;
 import com.shen.meteManagerbackend.entity.User;
 import com.shen.meteManagerbackend.enumerate.IsLocked;
 import com.shen.meteManagerbackend.enumerate.Role;
@@ -9,6 +10,7 @@ import com.shen.meteManagerbackend.exception.*;
 import com.shen.meteManagerbackend.service.IAuthService;
 import com.shen.meteManagerbackend.service.IUserService;
 import com.shen.meteManagerbackend.util.JwtUtil;
+import com.shen.meteManagerbackend.util.UserInfoUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -109,6 +111,17 @@ public class UserService implements IUserService {
         User user = User.builder()
                 .userMail(changePwdDTO.getUserMail())
                 .passWord(passwordEncoder.encode(changePwdDTO.getNewPassWord())) // 加密后存入DB
+                .build();
+        userDao.updateUserInfo(user);
+    }
+
+    @Override
+    public void addOrChangeAddress(Address address) {
+        String userMail = UserInfoUtil.getUserMail();
+        User user = User.builder()
+                .address(address)
+                .userMail(userMail)
+                .updateTime(new Date())
                 .build();
         userDao.updateUserInfo(user);
     }

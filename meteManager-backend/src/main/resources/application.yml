@@ -6,12 +6,23 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/meteorologicalinfo?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: "root"
     password: "00000."
+  mail:
+    host: "yours"
+    port: 587
+    username: "yours"
+    password: "yours"
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.shen.meteManagerbackend.entity
   configuration:
     map-underscore-to-camel-case: true
 
+# 日志权限
 logging:
   level:
     com.shen.meteManagerbackend.dao: debug
+# 高德开放天气查询API
+lbs:
+  key: "yours"
+

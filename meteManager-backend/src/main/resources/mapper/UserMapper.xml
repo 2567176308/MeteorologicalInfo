@@ -32,6 +32,7 @@
         <if test="userName!=null">user_name = #{userName},</if>
         <if test="passWord!=null">pass_word = #{passWord},</if>
         <if test="role!=null">role = #{role},</if>
+        <if test="address!=null">address = #{address.adCode},</if>
         <if test="isLock!=null">is_lock = #{isLock},</if>
         <if test="createTime!=null">create_time = #{createTime},</if>
         <if test="updateTime!=null">update_time = #{updateTime},</if>
@@ -61,6 +62,13 @@
         </where>
 
     </update>
+    <update id="updateAddressByMail" parameterType="User">
+        UPDATE tb_user
+
+        SET address = #{address.adCode}
+        WHERE
+        user_mail = #{userMail};
+    </update>
 
 
     <select id="countByMail" resultType="java.lang.Integer" parameterType="java.lang.String">
@@ -68,6 +76,9 @@
     </select>
     <select id="getUserByEmail" resultType="com.shen.meteManagerbackend.entity.User">
         SELECT * FROM tb_user WHERE user_mail = #{userMail} AND delete_time IS NULL;
+    </select>
+    <select id="countAddressByMail" resultType="java.lang.Integer">
+        SELECT COUNT(address) FROM tb_user WHERE user_mail = #{userMail} AND address IS NOT NULL AND delete_time IS NULL;
     </select>
 
 </mapper>

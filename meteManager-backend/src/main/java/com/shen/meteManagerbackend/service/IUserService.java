@@ -1,6 +1,7 @@
 package com.shen.meteManagerbackend.service;
 
 import com.shen.meteManagerbackend.dto.*;
+import com.shen.meteManagerbackend.entity.Address;
 import com.shen.meteManagerbackend.exception.AccountHasLockedException;
 import com.shen.meteManagerbackend.exception.DuplicateRegistrationException;
 import com.shen.meteManagerbackend.exception.EmailNotfoundException;
@@ -26,6 +27,12 @@ public interface IUserService {
      * @param changePwdDTO changePwdDTO
      */
     void changePwd(ChangePwdDTO changePwdDTO);
+
+    /**
+     * 添加或直接修改当前base(address)
+     * @param address Address 实例
+     */
+    void addOrChangeAddress(Address address);
 
     /*----------------------------power by admin----------------------------*/
     void deleteUserByAdmin(Integer userId);

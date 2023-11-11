@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title>【天气预警】</title>
+</head>
+<body>
+<h1>【天气预警】 <span th:text="${city}"></span>将有<span th:text="${weather}"></span></h1>
+    <p>
+        根据中央气象局预报，<span th:text="${province}"></span>省<span th:text="${city}"></span>将于<span th:text="${date}"></span>，
+        出现<span th:text="${weather}"></span>天气，出门记得携带雨伞。
+    </p>
+    该天气过程将对当地造成以下影响：
+        <ul>
+            <li>局地可能发生山洪、泥石流、滑坡等地质灾害。</li>
+            <li>局地可能发生城市内涝、道路积水等交通安全隐患。</li>
+            <li>局地可能发生雷电、大风等强对流天气。</li>
+        </ul>
+<p>
+    请当地居民及时关注天气预报，做好防范准备。
+</p>
+</body>
+</html>

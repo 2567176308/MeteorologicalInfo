@@ -18,7 +18,9 @@ public interface UserDao {
 
     void updateUserInfo(User user);
 
+    Integer countAddressByMail(String userMail);
 
+    void updateAddressByMail(User user);
 
 //    ===========================================================
     /**
