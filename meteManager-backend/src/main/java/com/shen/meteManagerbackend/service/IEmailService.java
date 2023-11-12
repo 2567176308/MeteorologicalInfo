@@ -2,6 +2,7 @@ package com.shen.meteManagerbackend.service;
 
 import com.shen.meteManagerbackend.entity.originData.Cast;
 import com.shen.meteManagerbackend.entity.originData.ForeCasts;
+import com.shen.meteManagerbackend.entity.originData.Live;
 
 public interface IEmailService {
 
@@ -13,5 +14,7 @@ public interface IEmailService {
     void sendComplexEmail(String to,String subject,String text,String filePath);
 
     void sendWarningEmail(ForeCasts foreCasts, String to);
+
+    void sendWarningEmail(Live live,String to);
 
 }

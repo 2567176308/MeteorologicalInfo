@@ -6,6 +6,7 @@ import com.shen.meteManagerbackend.entity.originData.Cast;
 import com.shen.meteManagerbackend.entity.originData.ForeCasts;
 import com.shen.meteManagerbackend.service.ICloudWeatherInfo;
 import com.shen.meteManagerbackend.service.IEmailService;
+import com.shen.meteManagerbackend.service.IPublisher;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ class MeteManagerBackendApplicationTests {
 	private ICloudWeatherInfo cloudWeatherInfo;
 	@Autowired
 	private IEmailService emailService;
+	@Autowired
+	private IPublisher publisher;
 	@Test
 	void contextLoads() {
 		String to = "2567176308@qq.com";
@@ -41,5 +44,9 @@ class MeteManagerBackendApplicationTests {
 		castList.add(cast);
 		foreCasts.setCasts(castList);
 		emailService.sendWarningEmail(foreCasts,to);
+	}
+	@Test
+	void test01() {
+		publisher.publish();
 	}
 }

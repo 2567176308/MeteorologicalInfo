@@ -10,11 +10,13 @@
         根据中央气象局预报，<span th:text="${province}"></span>省<span th:text="${city}"></span>将于<span th:text="${date}"></span>，
         出现<span th:text="${weather}"></span>天气，出门记得携带雨伞。
     </p>
-    该天气过程将对当地造成以下影响：
+    详细信息：
         <ul>
-            <li>局地可能发生山洪、泥石流、滑坡等地质灾害。</li>
-            <li>局地可能发生城市内涝、道路积水等交通安全隐患。</li>
-            <li>局地可能发生雷电、大风等强对流天气。</li>
+            <li>天气:<span th:text="${weather}"></span></li>
+            <li>气温:<span th:text="${temperature}"></span></li>
+            <li>湿度:<span th:text="${humidity}"></span></li>
+            <li>风向:<span th:text="${winddirection}"></span></li>
+            <li>风力:<span th:text="${windpower}"></span></li>
         </ul>
 <p>
     请当地居民及时关注天气预报，做好防范准备。

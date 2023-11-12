@@ -81,4 +81,17 @@
         SELECT COUNT(address) FROM tb_user WHERE user_mail = #{userMail} AND address IS NOT NULL AND delete_time IS NULL;
     </select>
 
+    <select id="getOrderAddress" resultType="string">
+        SELECT DISTINCT address FROM tb_user WHERE address;
+    </select>
+    <select id="getSubscriptions" resultMap="subscriptionMap">
+        SELECT DISTINCT address,user_mail FROM tb_user GROUP BY address,user_mail HAVING address;
+    </select>
+    
+    <resultMap id="subscriptionMap" type="com.shen.meteManagerbackend.entity.Subscription">
+        <result property="adCode" column="address" />
+        <collection property="emails"  ofType="string">
+            <result javaType="java.lang.String" column="user_mail"/>
+        </collection>
+    </resultMap>
 </mapper>

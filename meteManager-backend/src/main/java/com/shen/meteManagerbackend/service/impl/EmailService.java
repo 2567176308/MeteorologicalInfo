@@ -1,12 +1,11 @@
 package com.shen.meteManagerbackend.service.impl;
 
-import com.shen.meteManagerbackend.entity.originData.Cast;
 import com.shen.meteManagerbackend.entity.originData.ForeCasts;
+import com.shen.meteManagerbackend.entity.originData.Live;
 import com.shen.meteManagerbackend.service.IEmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafTemplateAvailabilityProvider;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,7 +13,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.Thymeleaf;
 import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
@@ -71,4 +69,35 @@ public class EmailService implements IEmailService {
         }
 
     }
+
+    @Override
+    public void sendWarningEmail(Live live, String to) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true);
+            mimeMessageHelper.setTo(to);
+            mimeMessageHelper.setFrom(from);
+            mimeMessageHelper.setSubject("天气预警");
+            Context context = getContext(live);
+            String content = templateEngine.process("/earlyWarning.html",context);
+            mimeMessageHelper.setText(content);
+            javaMailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Context getContext(Live live) {
+        Context context = new Context();
+        context.setVariable("city", live.getCity());
+        context.setVariable("province", live.getProvince());
+        context.setVariable("date", live.getReporttime());
+        context.setVariable("weather", live.getWeather());
+        context.setVariable("temperature", live.getTemperature_float());
+        context.setVariable("humidity", live.getHumidity_float());
+        context.setVariable("wind-direction", live.getWinddirection());
+        context.setVariable("wind power", live.getWindpower());
+        return context;
+    }
+
 }
