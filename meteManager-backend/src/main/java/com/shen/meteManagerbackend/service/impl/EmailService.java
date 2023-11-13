@@ -17,6 +17,7 @@ import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -87,6 +88,29 @@ public class EmailService implements IEmailService {
         }
     }
 
+    @Override
+    public void sendWarningEmail(Live live, List<String> tos) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true);
+            tos.forEach((to) -> {
+                try {
+                    mimeMessageHelper.addTo(to);
+                } catch (MessagingException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            mimeMessageHelper.setFrom(from);
+            mimeMessageHelper.setSubject("天气预警");
+            Context context = getContext(live);
+            String content = templateEngine.process("/earlyWarning.html",context);
+            mimeMessageHelper.setText(content);
+            javaMailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static Context getContext(Live live) {
         Context context = new Context();
         context.setVariable("city", live.getCity());
@@ -95,8 +119,8 @@ public class EmailService implements IEmailService {
         context.setVariable("weather", live.getWeather());
         context.setVariable("temperature", live.getTemperature_float());
         context.setVariable("humidity", live.getHumidity_float());
-        context.setVariable("wind-direction", live.getWinddirection());
-        context.setVariable("wind power", live.getWindpower());
+        context.setVariable("windDirection", live.getWinddirection());
+        context.setVariable("windPower", live.getWindpower());
         return context;
     }
 

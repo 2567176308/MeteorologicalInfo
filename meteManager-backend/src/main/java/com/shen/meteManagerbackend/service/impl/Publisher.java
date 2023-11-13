@@ -19,7 +19,7 @@ public class Publisher implements IPublisher {
     private final IEmailService emailService;
     private final UserDao userDao;
     private final ICloudWeatherInfo cloudWeatherInfo;
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 7 * * *")
     @Override
     public void publish() {
         List<Subscription> subscriptions = userDao.getSubscriptions();
@@ -28,9 +28,7 @@ public class Publisher implements IPublisher {
             String cityCode = subscription.getAdCode();
             List<Live> singleLive = cloudWeatherInfo.getSingleLive(cityCode);
             Live live = singleLive.get(0);
-            for (String email : subscription.getEmails()) {
-                emailService.sendWarningEmail(live,email);
-            }
+            emailService.sendWarningEmail(live,subscription.getEmails());
         }
     }
 }
