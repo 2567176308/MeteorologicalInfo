@@ -103,7 +103,7 @@ public class EmailService implements IEmailService {
             mimeMessageHelper.setFrom(from);
             mimeMessageHelper.setSubject("天气预警");
             Context context = getContext(live);
-            String content = templateEngine.process("/earlyWarning.html",context);
+            String content = templateEngine.process("earlyWarning.html",context);
             mimeMessageHelper.setText(content);
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {

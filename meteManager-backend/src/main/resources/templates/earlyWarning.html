@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
-    <title>【天气预警】</title>
+    <title>【天气预报】</title>
 </head>
 <body>
-<h1>【天气预警】 <span th:text="${city}"></span>将是<span th:text="${weather}"></span>天气</h1>
+<h1>【天气预报】 <span th:text="${city}"></span>将是<span th:text="${weather}"></span>天气</h1>
     <p>
         根据中央气象局预报，<span th:text="${province}"></span>省<span th:text="${city}"></span>将于<span th:text="${date}"></span>，
-        出现<span th:text="${weather}"></span>天气，出门记得携带雨伞。
+        出现<span th:text="${weather}"></span>天气.
     </p>
     详细信息：
         <ul>
