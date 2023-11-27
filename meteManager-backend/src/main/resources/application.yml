@@ -7,22 +7,22 @@ spring:
     username: "root"
     password: "00000."
   mail:
-    host: "yours"
+    host: "smtp-relay.brevo.com"
     port: 587
-    username: "yours"
-    password: "yours"
+    username: "xiaom9853@gmail.com"
+    password: "h9FqM3IdzY7GSwfC"
+
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.shen.meteManagerbackend.entity
   configuration:
     map-underscore-to-camel-case: true
-
 # 日志权限
 logging:
   level:
     com.shen.meteManagerbackend.dao: debug
 # 高德开放天气查询API
 lbs:
-  key: "yours"
+  key: "04c5f954f8d74eebcbccf93b0a4efe1e"
 
