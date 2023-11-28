@@ -1,6 +1,5 @@
 package com.shen.meteManagerbackend.service.impl;
 
-import com.shen.meteManagerbackend.dao.AddressDao;
 import com.shen.meteManagerbackend.dao.UserDao;
 import com.shen.meteManagerbackend.service.IAddressService;
 import com.shen.meteManagerbackend.util.UserInfoUtil;
