@@ -64,6 +64,12 @@ public class UserController {
         userService.addOrChangeAddress(address);
         return Result.success();
     }
+
+    @PostMapping("/user/subscribeService/{adCode}")
+    public Result<?> subscribeService(@PathVariable String adCode) {
+        userService.subscribe(adCode);
+        return Result.success();
+    }
     /*----------------------------------power by admin---------------------------------------------*/
 
     /**

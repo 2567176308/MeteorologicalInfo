@@ -22,31 +22,17 @@ import java.util.List;
 
 @SpringBootTest
 class MeteManagerBackendApplicationTests {
-//	@Autowired
-//	private ICloudWeatherInfo cloudWeatherInfo;
+	@Autowired
+	private ICloudWeatherInfo cloudWeatherInfo;
 //	@Autowired
 //	private IEmailService emailService;
 	@Autowired
 	private IPublisher publisher;
-//	@Test
-//	void contextLoads() {
-//		String to = "2567176308@qq.com";
-//		String text = "Hello World";
-//		String subject = "You can do it";
-//		ForeCasts foreCasts = new ForeCasts();
-//		foreCasts.setCity("宁乡");
-//		foreCasts.setProvince("浙江");
-//		foreCasts.setReporttime("2023/11/12");
-//		List<Cast> castList = new ArrayList<>();
-//		Cast cast = new Cast();
-//		cast.setDate(new Date());
-//		castList.add(cast);
-//		castList.add(cast);
-//		foreCasts.setCasts(castList);
-//		emailService.sendWarningEmail(foreCasts,to);
-//	}
+	@Autowired
+	private UserDao userDao;
 	@Test
 	void test01() {
-		publisher.publisherMySelf();
+		publisher.publish();
+//		System.out.println(cloudWeatherInfo.getSingleLive("654221"));
 	}
 }

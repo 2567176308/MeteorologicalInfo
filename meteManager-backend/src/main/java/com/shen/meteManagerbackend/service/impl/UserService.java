@@ -5,6 +5,7 @@ import com.shen.meteManagerbackend.dto.*;
 import com.shen.meteManagerbackend.entity.Address;
 import com.shen.meteManagerbackend.entity.User;
 import com.shen.meteManagerbackend.enumerate.IsLocked;
+import com.shen.meteManagerbackend.enumerate.IsSubscription;
 import com.shen.meteManagerbackend.enumerate.Role;
 import com.shen.meteManagerbackend.exception.*;
 import com.shen.meteManagerbackend.service.IAuthService;
@@ -44,6 +45,7 @@ public class UserService implements IUserService {
                 .passWord(passwordEncoder.encode(reqRegisterDTO.getPassWord())) // password加密
                 .role(Role.USER) // 普通用户
                 .isLock(IsLocked.UNLOCK.status()) // 非冻结用户
+                .isSubscription(IsSubscription.UNSUBSCRIBE.status()) // 未订阅邮件推送服务
                 .createTime(REGISTER_TIME)
                 .updateTime(REGISTER_TIME)
                 .build();
@@ -126,6 +128,21 @@ public class UserService implements IUserService {
         userDao.updateUserInfo(user);
     }
 
+    @Override
+    public void subscribe(String adCode) {
+        // 获取当前用户信息邮箱
+        String userMail = UserInfoUtil.getUserMail();
+        Address address = new Address();
+        address.setAdCode(adCode);
+        User build = User.builder()
+                .userMail(userMail)
+                .address(address)
+                .isSubscription(IsSubscription.SUBSCRIBE.status()) // 改为订阅模式
+                .build();
+        // 将订阅状态改为 一订阅 并将地址填入
+        userDao.updateUserInfo(build);
+    }
+
 
     /*-------------------------admin-----------------------------*/
     @Override
@@ -181,6 +198,8 @@ public class UserService implements IUserService {
                 .build();
         lockOrUnlockUser(user);
     }
+
+
 
     /**
      * 删除用户真实方法

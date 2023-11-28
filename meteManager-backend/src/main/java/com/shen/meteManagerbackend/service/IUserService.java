@@ -43,4 +43,10 @@ public interface IUserService {
 
     void unlockUser(String userMail);
     void unlockUser(Integer userId);
+
+    /**
+     * 开启邮箱推送天气服务
+     * @param adCode 天气代码 && 城市名称
+     */
+    void subscribe(String adCode);
 }

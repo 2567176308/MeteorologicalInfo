@@ -3,23 +3,72 @@
 <head>
     <meta charset="utf-8">
     <title>【天气预报】</title>
+    <style>
+        .container {
+            width: 800px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+        }
+        h1 {
+            font-size: 24px;
+            color: green;
+        }
+        p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        ul li:nth-child(odd) {
+            background-color: #eee;
+        }
+
+        ul li span {
+            font-weight: bold;
+        }
+        .temperature {
+            color: red;
+        }
+
+        .humidity {
+            color: blue;
+        }
+
+        .windDirection {
+            color: green;
+        }
+
+        .windPower {
+            color: orange;
+        }
+    </style>
 </head>
-<body>
+<body class="container">
 <h1>【天气预报】 <span th:text="${city}"></span>将是<span th:text="${weather}"></span>天气</h1>
     <p>
-        根据中央气象局预报，<span th:text="${province}"></span>省<span th:text="${city}"></span>将于<span th:text="${date}"></span>，
-        出现<span th:text="${weather}"></span>天气.
+        根据中央气象局预报，<span th:text="${province}"></span>省<span th:text="${city}"></span>
+        出现<span th:text="${weather}"></span>天气.报导时间：<span th:text="${date}"></span>
     </p>
     详细信息：
         <ul>
             <li>天气:<span th:text="${weather}"></span></li>
-            <li>气温:<span th:text="${temperature}"></span></li>
-            <li>湿度:<span th:text="${humidity}"></span></li>
-            <li>风向:<span th:text="${windDirection}"></span></li>
-            <li>风力:<span th:text="${windPower}"></span></li>
+            <li class="temperature">气温:<span th:text="${temperature}"></span></li>
+            <li class="humidity">湿度:<span th:text="${humidity}"></span></li>
+            <li class="windDirection">风向:<span th:text="${windDirection}"></span></li>
+            <li class="windPower">风力:<span th:text="${windPower}"></span></li>
         </ul>
 <p>
     请当地居民及时关注天气预报，做好防范准备。
 </p>
 </body>
 </html>
+

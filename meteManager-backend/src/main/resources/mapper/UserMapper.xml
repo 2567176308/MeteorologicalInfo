@@ -10,6 +10,8 @@
         <if test="userMail!=null">,user_mail</if>
         <if test="role!=null">,role</if>
         <if test="isLock!=null">,is_lock</if>
+        <if test="isSubscription!=null">,is_subscription</if>
+        <if test="address!=null">,address</if>
         <if test="createTime!=null">,create_time</if>
         <if test="updateTime!=null">,update_time</if>
         <if test="deleteTime!=null">,delete_time</if>
@@ -19,6 +21,8 @@
         <if test="userMail!=null">,#{userMail}</if>
         <if test="role">,#{role}</if>
         <if test="isLock!=null">,#{isLock}</if>
+        <if test="isSubscription!=null">,#{isSubscription}</if>
+        <if test="address!=null">,#{address.adCode}</if>
         <if test="createTime!=null">,#{createTime}</if>
         <if test="updateTime!=null">,#{updateTime}</if>
         <if test="deleteTime!=null">,#{deleteTime}</if>
@@ -29,14 +33,15 @@
         SET
         <trim suffixOverrides=",">
             <!-- The TRIM element above is used to remove the trailing comma -->
-        <if test="userName!=null">user_name = #{userName},</if>
-        <if test="passWord!=null">pass_word = #{passWord},</if>
-        <if test="role!=null">role = #{role},</if>
-        <if test="address!=null">address = #{address.adCode},</if>
-        <if test="isLock!=null">is_lock = #{isLock},</if>
-        <if test="createTime!=null">create_time = #{createTime},</if>
-        <if test="updateTime!=null">update_time = #{updateTime},</if>
-        <if test="deleteTime!=null">delete_time = #{deleteTime}</if>
+            <if test="userName!=null">user_name = #{userName},</if>
+            <if test="passWord!=null">pass_word = #{passWord},</if>
+            <if test="role!=null">role = #{role},</if>
+            <if test="isSubscription!=null">is_subscription = #{isSubscription},</if>
+            <if test="address!=null">address = #{address.adCode},</if>
+            <if test="isLock!=null">is_lock = #{isLock},</if>
+            <if test="createTime!=null">create_time = #{createTime},</if>
+            <if test="updateTime!=null">update_time = #{updateTime},</if>
+            <if test="deleteTime!=null">delete_time = #{deleteTime}</if>
         </trim>
         WHERE user_mail = #{userMail}
     </update>

@@ -27,6 +27,7 @@ public class User implements UserDetails {
     private Address address;
     private Role role;
     private Boolean isLock;
+    private Boolean isSubscription;
     private Date createTime;
     private Date updateTime;
     private Date deleteTime;

@@ -2,11 +2,11 @@ package com.shen.meteManagerbackend.enumerate;
 
 public enum IsLocked {
     /**
-     * 未冻结
+     * 已冻结
      */
     LOCKED(true),
     /**
-     * 已被冻结
+     * 未被冻结
      */
     UNLOCK(false);
 
