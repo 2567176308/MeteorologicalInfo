@@ -4,10 +4,10 @@
             <h2>登录</h2>
         </div>
         <div class="card">
-            <el-form :model="form" label-width="60px">
+            <el-form :model="loginForm" label-width="60px">
                 <el-form-item label="邮箱">
                 <el-input 
-                v-model="form.name" 
+                v-model="loginForm.userMail" 
                 class="w-50 m-2"
                 size="large"
                 clearable
@@ -15,7 +15,7 @@
                 </el-form-item>
                 <el-form-item label="密码">
                 <el-input
-                v-model="input"
+                v-model="loginForm.passWord"
                 type="password"
                 class="w-50 m-2"
                 size="large"
@@ -27,7 +27,7 @@
                     <a href="#">忘记密码?</a>
                 </el-form-item>
                 <el-form-item>
-                <el-button class="form-btns" type="primary" @click="onSubmit" size="large" round>登录</el-button>
+                <el-button class="form-btns" type="primary" @click="login" size="large" round>登录</el-button>
                 <el-button class="form-btns" type="success" size="large" round>注册</el-button>
                 </el-form-item>
             </el-form>
@@ -38,22 +38,26 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 import { ref } from 'vue'
-const input = ref('')
-// do not use same name with ref
-const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
+import { request } from '../utils/request'
+let loginForm = reactive({
+    userMail: '',
+    passWord: ''
 })
-
-const onSubmit = () => {
-  console.log('submit!')
+function login() {
+    request({
+        method: 'post',
+        url: '/user/api/login',
+        data: {
+            userMail: loginForm.userMail,
+            passWord: loginForm.passWord
+        },
+        headers: {
+            'Authorization': window.localStorage.token
+        }
+    });
 }
+
+
 </script>
 
 <style>
