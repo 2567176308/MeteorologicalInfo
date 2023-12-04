@@ -7,10 +7,10 @@ spring:
     username: "root"
     password: "00000."
   mail:
-    host: "yours"
+    host: "smtp-relay.brevo.com"
     port: 587
-    username: "yours"
-    password: "yours"
+    username: "xiaom9853@gmail.com"
+    password: "h9FqM3IdzY7GSwfC"
 
 
 mybatis:
@@ -24,5 +24,5 @@ logging:
     com.shen.meteManagerbackend.dao: debug
 # 高德开放天气查询API
 lbs:
-  key: "yours"
+  key: "04c5f954f8d74eebcbccf93b0a4efe1e"
 

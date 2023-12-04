@@ -30,13 +30,7 @@
 
 <script>
 export default {
-  data(){
-    return {
-      
-    }
-  },
   name: 'AppFooter',
-
   // 在这里可以添加一些footer的数据和逻辑
 }
 </script>

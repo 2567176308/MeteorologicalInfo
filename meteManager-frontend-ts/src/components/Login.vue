@@ -51,8 +51,9 @@ import { ref } from 'vue'
 
 import { userLogin } from '../api/user'
 import useStore from 'element-plus/es/components/table/src/store/index.mjs';
+import router from '@/router';
 import { useRouter } from 'vue-router';
-import {LStorage} from '../utils/storage'
+import {LStorage} from '../api/storage'
 let loginForm = reactive({
     userMail: '',
     passWord: '',
@@ -72,10 +73,8 @@ function login() {
             console.log(validation.value)
             return;
         }
-        // 存入token
         LStorage.set("token",res.data.token)
-        // 存入userName信息
-        LStorage.set("userName",res.data.userName)
+        console.log("success")
         usert.push("/index")
         console.log(res)
     })

@@ -2,7 +2,7 @@
     <div id="container">
     </div>
 </template>
-<script>
+<script setup>
 import AMapLoader from '@amap/amap-jsapi-loader';
 export default {
   name: "map-view",

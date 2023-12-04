@@ -1,5 +1,5 @@
-import { createRouter, createWebHashHistory ,RouteRecordRaw } from 'vue-router'
-
+import { createRouter, createWebHashHistory } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 const routes:Array<RouteRecordRaw> = [
     //  {
     //     path: "/",
@@ -15,12 +15,9 @@ const routes:Array<RouteRecordRaw> = [
     },
     {
         path: "/index",
-        component: () => import("../components/Index.vue")
+        component: ()=> import("../components/Index.vue")
     }
-    
 ]
-
-
 
 const router = createRouter({
     history: createWebHashHistory(),
