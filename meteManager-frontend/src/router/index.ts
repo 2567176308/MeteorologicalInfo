@@ -16,6 +16,14 @@ const routes:Array<RouteRecordRaw> = [
     {
         path: "/index",
         component: () => import("../components/Index.vue")
+    },
+    {
+        path: "/",
+        component: () => import("../components/Index.vue")
+    },
+    {
+        path: "/header",
+        component: ()=> import("../components/Header.vue")
     }
     
 ]

@@ -1,5 +1,10 @@
+<template>
+  <div id="container"></div>
+</template>
+
+
 <script setup>
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted ,provide} from "vue";
 import AMapLoader from "@amap/amap-jsapi-loader";
 
 let map = null;
@@ -8,7 +13,7 @@ onMounted(() => {
   AMapLoader.load({
     key: "58139b03432e5df5015e6163ae5535f3", // 申请好的Web端开发者Key，首次调用 load 时必填
     version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-    plugins: [], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+    plugins: ["AMap.Scale"], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
   })
     .then((AMap) => {
       map = new AMap.Map("container", {
@@ -26,11 +31,14 @@ onMounted(() => {
 onUnmounted(() => {
   map?.destroy();
 });
+
+const toIndex =() => {
+  location.reload()
+}
+provide('toIndex',toIndex)
 </script>
 
-<template>
-  <div id="container"></div>
-</template>
+
 
 <style scoped>
 #container {

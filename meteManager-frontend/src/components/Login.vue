@@ -53,11 +53,16 @@ import { userLogin } from '../api/user'
 import useStore from 'element-plus/es/components/table/src/store/index.mjs';
 import { useRouter } from 'vue-router';
 import {LStorage} from '../utils/storage'
+import { inject } from 'vue'
 let loginForm = reactive({
     userMail: '',
     passWord: '',
 })
 let err = ref('')
+let isLogin = inject("isLogin")
+const toIndex = inject<any>("toIndex")
+const reload = inject<any>("reload")
+const toVue = inject<any>("toVue")
 let validation = ref("请满足密码要求")
 const store = useStore()
 const usert = useRouter()
@@ -77,6 +82,10 @@ function login() {
         // 存入userName信息
         LStorage.set("userName",res.data.userName)
         usert.push("/index")
+        isLogin = true
+        location.reload
+        toVue()
+        toHeader()
         console.log(res)
     })
 }

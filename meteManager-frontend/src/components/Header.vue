@@ -40,7 +40,9 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router' 
 import { LStorage } from '../utils/storage';
-let isLogin = ref(false)
+import { inject,provide } from 'vue'
+let isLogin = inject('isLogin')
+const toVue = inject<any>('toVue')
 const activeIndex = ref('1')
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
@@ -51,16 +53,24 @@ const toPage = (url:string) => {
 }
 
 const userName = LStorage.getOrigin("userName")
-console.log(userName + "dsdad")
 if( userName !== null && userName !== undefined) {
-  isLogin.value = true
+  isLogin = true
 }
+
+function toHeader(){
+  console.log("why")
+  location.reload()
+}
+// provide
 // 退出登录
 const  logout = ()=> {
   LStorage.delete("token")
   LStorage.delete("userName")
-  isLogin.value = false
+  isLogin = false
+  toHeader()
+  toVue()
 }
+
 
 </script>
 
